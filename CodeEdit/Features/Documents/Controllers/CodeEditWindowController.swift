@@ -185,6 +185,11 @@ final class CodeEditWindowController: NSWindowController, NSToolbarDelegate, Obs
         }
     }
 
+    @IBAction func newWindow(_ sender: Any) {
+        workspace?.makeWindowControllers()
+        workspace?.windowControllers.last?.showWindow(self)
+    }
+
     func windowShouldClose(_ sender: NSWindow) -> Bool {
         cancellables.forEach({ $0.cancel() })
         cancellables.removeAll()

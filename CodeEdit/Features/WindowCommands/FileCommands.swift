@@ -20,10 +20,17 @@ struct FileCommands: Commands {
     var body: some Commands {
         CommandGroup(replacing: .newItem) {
             Group {
-                Button("New") {
-                    NSDocumentController.shared.newDocument(nil)
+                Menu("New") {
+                    Button("Project") {
+                        NSDocumentController.shared.newDocument(nil)
+                    }
+                    .keyboardShortcut("n")
+                    Button("Window") {
+                        NSApp.sendAction(#selector(CodeEditWindowController.newWindow(_:)), to: nil, from: nil)
+                    }
+                    .keyboardShortcut("t", modifiers: [.shift, .command])
+                    .disabled(!(NSApplication.shared.keyWindow?.windowController is CodeEditWindowController))
                 }
-                .keyboardShortcut("n")
 
                 Button("Open...") {
                     NSDocumentController.shared.openDocument(nil)
